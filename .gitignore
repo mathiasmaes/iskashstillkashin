@@ -1,0 +1,15 @@
+# Environment secrets
+.env
+.env.local
+
+# Python virtual environment
+venv/
+__pycache__/
+*.pyc
+*.pyo
+
+# macOS junk
+.DS_Store
+
+# VSCode workspace settings (optional to ignore)
+.vscode/
