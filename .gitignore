@@ -13,3 +13,4 @@ __pycache__/
 
 # VSCode workspace settings (optional to ignore)
 .vscode/
+.claude
