@@ -1,6 +1,9 @@
 feedparser==6.0.11
 requests>=2.31.0
+googlenewsdecoder>=0.1.4
 # Google Gemini (new SDK — replaces google-generativeai)
 google-genai>=1.0.0
 # Environment variables
 python-dotenv>=1.0.0
+# Testing
+pytest>=8.0.0

@@ -1,16 +1,44 @@
-# Environment secrets
+# Secrets and credentials
 .env
 .env.local
+.env.*.local
+.env.development
+.env.production
+.env.test
+*.pem
+*.key
 
-# Python virtual environment
+# Vercel local config (contains project/org IDs)
+.vercel/
+
+# Python
 venv/
+.venv/
 __pycache__/
 *.pyc
 *.pyo
+*.pyd
+.Python
+*.egg-info/
+dist/
+build/
 
-# macOS junk
+# Logs
+*.log
+logs/
+
+# macOS
 .DS_Store
+.AppleDouble
 
-# VSCode workspace settings (optional to ignore)
+# IDE
 .vscode/
+.idea/
+*.swp
+*.swo
+
+# Claude Code
 .claude
+
+# Test artifacts
+test_kash.py

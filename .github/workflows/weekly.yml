@@ -1,15 +1,14 @@
-name: Kash Status Agent
+name: Weekly Market Assessment
 
 on:
   schedule:
-    - cron: "0 8 * * *"
-    - cron: "0 20 * * *"
+    - cron: "0 21 * * 0"  # 21:00 UTC every Sunday (1h after the 20:00 daily run)
   workflow_dispatch:
 
 jobs:
-  run-agent:
+  run-weekly:
     runs-on: ubuntu-latest
-    timeout-minutes: 10
+    timeout-minutes: 5
 
     steps:
       - name: Checkout repository
@@ -23,10 +22,9 @@ jobs:
       - name: Install dependencies
         run: pip install -r requirements.txt
 
-      - name: Run agent
+      - name: Run weekly assessment
         env:
           GEMINI_API_KEY:    ${{ secrets.GEMINI_API_KEY }}
           KV_REST_API_URL:   ${{ secrets.KV_REST_API_URL }}
           KV_REST_API_TOKEN: ${{ secrets.KV_REST_API_TOKEN }}
-          JINA_API_KEY:      ${{ secrets.JINA_API_KEY }}
-        run: python kash.py
+        run: python kash_weekly.py
