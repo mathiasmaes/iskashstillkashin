@@ -178,25 +178,25 @@ def compute_market_stats(snapshots: list[dict]) -> dict:
         "markets_agree": markets_agree,
     }
 
-def build_price_summary(stats: dict) -> str:
+def build_price_summary(stats: dict, week_start: str, week_end: str) -> str:
     k = stats["kalshi"]
     p = stats["polymarket"]
     direction = stats["direction"].upper()
     parts = []
     if k["open"] is not None:
         parts.append(
-            f"Kalshi: {k['open']*100:.1f}% → {k['close']*100:.1f}%"
-            f" (Δ {k['delta']*100:+.1f}pts, {k['pct_change']:+.1f}%)"
+            f"Kalshi: {k['open']*100:.1f}% ({week_start}) → {k['close']*100:.1f}% ({week_end})"
+            f"  Δ {k['delta']*100:+.1f}pts ({k['pct_change']:+.1f}%)"
         )
     if p["open"] is not None:
         parts.append(
-            f"Polymarket: {p['open']*100:.1f}% → {p['close']*100:.1f}%"
-            f" (Δ {p['delta']*100:+.1f}pts, {p['pct_change']:+.1f}%)"
+            f"Polymarket: {p['open']*100:.1f}% ({week_start}) → {p['close']*100:.1f}% ({week_end})"
+            f"  Δ {p['delta']*100:+.1f}pts ({p['pct_change']:+.1f}%)"
         )
     agree_str = "agree" if stats["markets_agree"] else "disagree"
-    summary = f"Both markets moved {direction} this week. " + "  ".join(parts)
+    summary = f"Direction: {direction}  |  " + "  //  ".join(parts)
     if len(parts) == 2:
-        summary += f"  Markets {agree_str} on direction."
+        summary += f"  |  Markets {agree_str}"
     return summary
 
 # ---------------------------------------------------------------------------
@@ -300,10 +300,12 @@ def main():
         )
         return
 
-    week_of = snapshots[0]["date"]
+    week_start = snapshots[0].get("date", "")
+    week_end   = snapshots[-1].get("date", "")
+    week_of    = week_start  # backward-compat field
 
     stats         = compute_market_stats(snapshots)
-    price_summary = build_price_summary(stats)
+    price_summary = build_price_summary(stats, week_start, week_end)
     log_weekly.info(
         f"Market stats computed  direction={stats['direction']}"
         f"  kalshi_delta={stats['kalshi']['delta']}"
@@ -322,6 +324,8 @@ def main():
     p = stats["polymarket"]
     assessment = {
         "week_of":               week_of,
+        "week_start":            week_start,
+        "week_end":              week_end,
         "generated_at":          now_str,
         "snapshots_used":        len(snapshots),
         "kalshi_open":           k["open"],

@@ -4,8 +4,11 @@ Usage: python serve.py   (then open http://localhost:8080)
 """
 import json
 import os
+import pathlib
 import urllib.request
 from http.server import BaseHTTPRequestHandler, HTTPServer
+
+PUBLIC_DIR = pathlib.Path(__file__).parent / "public"
 
 def _load_dotenv():
     path = os.path.join(os.path.dirname(__file__), ".env")
@@ -423,13 +426,27 @@ def _kv_get(key: str):
 
 
 class Handler(BaseHTTPRequestHandler):
+    _MIME = {
+        'png': 'image/png', 'jpg': 'image/jpeg', 'jpeg': 'image/jpeg',
+        'gif': 'image/gif', 'svg': 'image/svg+xml', 'ico': 'image/x-icon',
+        'css': 'text/css', 'js': 'application/javascript',
+    }
+
     def do_GET(self):
-        if self.path == "/":
-            self._send(200, "text/html", HTML.encode())
+        if self.path in ("/", "/index.html"):
+            body = (PUBLIC_DIR / "index.html").read_bytes()
+            self._send(200, "text/html", body)
         elif self.path == "/data":
             self._send_data()
         else:
-            self._send(404, "text/plain", b"not found")
+            # Serve static files from public/
+            file_path = PUBLIC_DIR / self.path.lstrip('/')
+            if file_path.is_file():
+                ext = file_path.suffix.lstrip('.').lower()
+                ct  = self._MIME.get(ext, 'application/octet-stream')
+                self._send(200, ct, file_path.read_bytes())
+            else:
+                self._send(404, "text/plain", b"not found")
 
     def _send_data(self):
         if not KV_REST_URL or not KV_REST_TOKEN:

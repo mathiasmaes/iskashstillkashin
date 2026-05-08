@@ -1,4 +1,4 @@
-# Is Kash Till Cashing? - An Little Large Language Model playground
+# Is Kash still Kashin? - An Little Large Language Model playground
 
 A playground for getting familiar with LLM and agentic AI principles, wrapped around the only question that matters: **is Kash Patel still the FBI Director?**
 
@@ -34,15 +34,6 @@ python kash.py           # run the daily agent
 python kash_weekly.py    # run the weekly assessment
 python serve.py          # inspect the data at localhost:8080
 ```
-
-**Required env vars:**
-- `GEMINI_API_KEY` — Google GenAI ([aistudio.google.com](https://aistudio.google.com), free)
-- `KV_REST_API_URL` / `KV_REST_API_TOKEN` — Vercel KV
-- `JINA_API_KEY` — optional, but you'll get rate-limited without it
-
-Ollama is picked up automatically if it's running locally and `RUN_MODE` is set to `auto`.
-
----
 
 ## Automated runs
 

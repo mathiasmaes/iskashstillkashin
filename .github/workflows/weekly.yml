@@ -2,7 +2,7 @@ name: Weekly Market Assessment
 
 on:
   schedule:
-    - cron: "0 21 * * 0"  # 21:00 UTC every Sunday (1h after the 20:00 daily run)
+    - cron: "0 6 * * 0"   # 06:00 UTC Sunday — off-peak for Gemini, covers Mon–Sat daily snapshots
   workflow_dispatch:
 
 jobs:
