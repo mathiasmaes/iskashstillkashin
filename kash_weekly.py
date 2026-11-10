@@ -33,7 +33,7 @@ GEMINI_API_KEY = os.environ.get("GEMINI_API_KEY", "")
 KV_REST_URL    = os.environ.get("KV_REST_API_URL", "").rstrip("/")
 KV_REST_TOKEN  = os.environ.get("KV_REST_API_TOKEN", "")
 
-GEMINI_MODEL          = "gemini-flash-lite-latest"
+GEMINI_MODEL          = "gemini-3.5-flash-lite"
 DAILY_SNAPSHOTS_KEY   = "kash_daily_snapshots"
 WEEKLY_ASSESSMENT_KEY = "kash_weekly_assessment"
 

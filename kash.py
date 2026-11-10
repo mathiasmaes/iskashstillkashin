@@ -22,7 +22,7 @@ KV_REST_URL    = os.environ.get("KV_REST_API_URL", "").rstrip("/")
 KV_REST_TOKEN  = os.environ.get("KV_REST_API_TOKEN", "")
 
 # --- AGENT SETTINGS ---
-GEMINI_MODEL          = "gemini-flash-lite-latest"
+GEMINI_MODEL          = "gemini-3.5-flash-lite"
 GEMINI_MAX_RETRIES    = 5
 GEMINI_RETRY_DELAY_S  = 60
 
